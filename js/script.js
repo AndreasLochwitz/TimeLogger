@@ -1,14 +1,23 @@
+
 document.getElementById("logButton").addEventListener("click", function() {
   var moment = new Date(),
       resultDiv = null;
   console.log(getDate(moment));
   console.log(getTime(moment));
   console.log(getTimeStamp(moment));
-  //alert("klick - " + getTime(moment) + " - " + getTimeStamp(moment));
   resultDiv = document.createElement("div");
   resultDiv.innerHTML = getTime(moment) + "<br /><b>" + getTimeStamp(moment) + "</b>";
   resultDiv.className = "resultEntry";
   var resultsDiv = document.getElementById("logResults");
+  var hammertime = new Hammer(resultDiv);
+  hammertime.get('swipe').set({ direction: Hammer.DIRECTION_LEFT });
+  hammertime.on('swipe', function(ev) {
+    if (ev.target.nodeName == "B") {
+      ev.target.parentNode.remove();
+    } else {
+        ev.target.remove();
+    }
+  });
   if (resultsDiv.firstChild) {
     resultsDiv.insertBefore(resultDiv, resultsDiv.firstChild);
   } else {
